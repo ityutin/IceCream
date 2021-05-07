@@ -80,7 +80,7 @@ extension CKRecordConvertible where Self: Object {
         let r = CKRecord(recordType: Self.recordType, recordID: recordID)
         let properties = objectSchema.properties
         for prop in properties {
-            guard !onlyLocalProperties.contains(prop.name) else {
+            guard !Self.onlyLocalProperties.contains(prop.name) else {
                 r[prop.name] = nil
                 continue
             }

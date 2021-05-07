@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol CKRecordBase {
+public protocol CKRecordBase {
     static var onlyLocalProperties: [String] { get }
 }
 
