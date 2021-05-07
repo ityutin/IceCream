@@ -9,7 +9,7 @@ import Foundation
 import CloudKit
 import RealmSwift
 
-public protocol CKRecordConvertible {
+public protocol CKRecordConvertible: CKRecordBase {
     static var recordType: String { get }
     static var zoneID: CKRecordZone.ID { get }
     static var databaseScope: CKDatabase.Scope { get }
@@ -80,7 +80,11 @@ extension CKRecordConvertible where Self: Object {
         let r = CKRecord(recordType: Self.recordType, recordID: recordID)
         let properties = objectSchema.properties
         for prop in properties {
-            
+            guard !onlyLocalProperties.contains(prop.name) else {
+                r[prop.name] = nil
+                continue
+            }
+
             let item = self[prop.name]
             
             if prop.isArray {

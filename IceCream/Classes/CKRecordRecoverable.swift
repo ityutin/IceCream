@@ -8,7 +8,7 @@
 import CloudKit
 import RealmSwift
 
-public protocol CKRecordRecoverable {
+public protocol CKRecordRecoverable: CKRecordBase {
     
 }
 
@@ -23,6 +23,8 @@ extension CKRecordRecoverable where Self: Object {
     ) -> Self? {
         let o = Self()
         for prop in o.objectSchema.properties {
+            guard !onlyLocalProperties.contains(prop.name) else { continue }
+
             var recordValue: Any?
             
             if prop.isArray {
